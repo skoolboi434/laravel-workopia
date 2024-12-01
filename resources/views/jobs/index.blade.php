@@ -1,12 +1,15 @@
 <x-layout>
-  <x-slot name="title">Workopia - Available Jobs</x-slot>
-  <h1>Available Jobs</h1>
-  <ul>
+  <x-slot name="title">Workopia - All Jobs</x-slot>
+  <h2 class="text-center text-3xl mb-4 font-bold border border-gray-300 p-3">
+    All Jobs</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
     @forelse($jobs as $job)
-    <li><a href="{{route('jobs.show', $job->id)}}">{{$job->title}}</a> -
-      {{$job->description}}</li>
+    <div>
+      <x-job-card :job="$job" />
+
+    </div>
     @empty
-    <li>No jobs available</li>
+    <p>No jobs available</p>
     @endforelse
-  </ul>
+  </div>
 </x-layout>
