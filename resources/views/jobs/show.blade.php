@@ -205,3 +205,37 @@
     </div>
   </main>
 </x-layout>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    mapboxgl.accessToken = "{{env('MAPBOX_API_KEY')}}";
+
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-74.5, 40],
+      zoom: 9
+    });
+
+    const city = '{{$job->city}}';
+    const state = '{{$job->state}}';
+    const address = city + ', ' + state;
+
+    fetch(`/geocode?address=${encodeURIComponent(address)}`)
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.features.length > 0) {
+      const [longitude, latitude] = data.features[0].center;
+
+      // Center the map and add 
+      map.setCenter([longitude, latitude]);
+      map.setZoom(14);
+
+      new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
+    } else {
+    console.error('No results found for the address.');
+    }
+  }).catch((error) => console.error('Error geocoding address:', error));
+  });
+</script>
