@@ -8,7 +8,8 @@
       <x-nav-link url="/jobs" :active="request()->is('jobs')">All Jobs
       </x-nav-link>
       @auth
-      <x-nav-link url="/saved" :active="request()->is('saved')">Saved Jobs
+      <x-nav-link url="/bookmarks" :active="request()->is('bookmarks')">Saved
+        Jobs
       </x-nav-link>
 
       <x-logout-button />
@@ -51,7 +52,8 @@
       Jobs
     </x-nav-link>
     @auth
-    <x-nav-link url="/saved" :active="request()->is('saved')" :mobile="true">
+    <x-nav-link url="/bookmarks" :active="request()->is('bookmarks')"
+      :mobile="true">
       Saved
       Jobs
     </x-nav-link>
