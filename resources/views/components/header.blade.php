@@ -10,30 +10,39 @@
       @auth
       <x-nav-link url="/saved" :active="request()->is('saved')">Saved Jobs
       </x-nav-link>
-      <x-nav-link url="/dashboard" :active="request()->is('dashboard')"
-        icon="gauge">
-        Dashboard
-      </x-nav-link>
+
       <x-logout-button />
       <x-button-link url="/jobs/create" icon="edit">Create
         Job</x-button-link>
+      <div class="flex-items-center space-x-3">
+        <a href="{{route('dashboard')}}">
+          @auth
+          @if (Auth::user()->avatar)
+          <img class="w-10 h-10 object-cover rounded-full"
+            src="{{asset('storage/' . Auth::user()->avatar)}}"
+            alt="{{Auth::user()->name}}" class="w-10 h-10 rounded-full">
+          @else
+          <img class="w-10 h-10 object-cover rounded-full"
+            src="{{asset('storage/avatars/default-avatar.png')}}"
+            alt="{{Auth::user()->name}}">
+          @endif
+          @endauth
+        </a>
+      </div>
       @else
       <x-nav-link url="/login" :active="request()->is('login')">Login
       </x-nav-link>
       <x-nav-link url="/register" :active="request()->is('register')">Register
       </x-nav-link>
       @endauth
-
-
-
-
-
-
     </nav>
+
     <button @click="open = !open" id="hamburger"
       class="text-white md:hidden flex items-center">
       <i class="fa fa-bars text-2xl"></i>
     </button>
+
+
   </div>
   <!-- Mobile Menu -->
   <nav x-show="open" @click.away="open = false" id="mobile-menu"
